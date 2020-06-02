@@ -8,7 +8,7 @@ import Vec3 from './Vec3';
 const aspectRatio = 16 / 9;
 const focalLength = 1;
 const imageWidth = 256;
-const imageHeight = 256;
+const imageHeight = Math.floor(imageWidth / aspectRatio);
 const viewportHeight = 2;
 const viewportWidth = aspectRatio * viewportHeight;
 

@@ -20,6 +20,10 @@ export default class Ray {
    * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#rays,asimplecamera,andbackground/sendingraysintothescene
    */
   color(): Color {
+    if (this.hitsSphere(new Point(0, 0, -1), 0.5)) {
+      return new Color(1, 0, 0);
+    }
+
     const unitDirection = this.direction.unit();
     const factor = 0.5 * (unitDirection.y + 1);
 
@@ -30,5 +34,19 @@ export default class Ray {
     // The `scaleUp` and `add` operations return a Vec3, not a Color. Get around that by explicitly
     // instantiating a new Color object.
     return new Color(c.x, c.y, c.z);
+  }
+
+  /**
+   * Determine if this ray hits a sphere. This is hardcoded logic that will be moved out of here at
+   * some point.
+   * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#addingasphere/creatingourfirstraytracedimage
+   */
+  hitsSphere(center: Point, radius: number) {
+    const offCenter = this.origin.subtract(center);
+    const a = this.direction.dotProduct(this.direction);
+    const b = 2 * offCenter.dotProduct(this.direction);
+    const c = offCenter.dotProduct(offCenter) - radius * radius;
+    const discriminant = b * b - 4 * a * c;
+    return discriminant > 0;
   }
 }
