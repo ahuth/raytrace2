@@ -18,3 +18,13 @@ test('at', () => {
   expect(ray.at(1)).toEqual(expect.objectContaining({ x: 7, y: 7, z: -1 }));
   expect(ray.at(2)).toEqual(expect.objectContaining({ x: 12, y: 14, z: -5 }));
 });
+
+test('color', () => {
+  const origin = new Point(2, 0, 3);
+  const direction = new Vec3(5, 7, -4);
+  const ray = new Ray(origin, direction);
+  const color = ray.color();
+  expect(color.r).toBeCloseTo(0.5655);
+  expect(color.g).toBeCloseTo(0.7393);
+  expect(color.b).toBeCloseTo(1);
+});

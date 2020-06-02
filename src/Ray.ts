@@ -1,3 +1,4 @@
+import Color from './Color';
 import Point from './Point';
 import Vec3 from './Vec3';
 
@@ -12,5 +13,22 @@ export default class Ray {
 
   at(time: number): Point {
     return this.origin.add(this.direction.scaleUp(time));
+  }
+
+  /**
+   * Get the color of the background the ray strikes. For now, this just returns a gradient.
+   * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#rays,asimplecamera,andbackground/sendingraysintothescene
+   */
+  color(): Color {
+    const unitDirection = this.direction.unit();
+    const factor = 0.5 * (unitDirection.y + 1);
+
+    const a = new Color(1, 1, 1).scaleUp(1 - factor);
+    const b = new Color(0.5, 0.7, 1).scaleUp(factor);
+    const c = a.add(b);
+
+    // The `scaleUp` and `add` operations return a Vec3, not a Color. Get around that by explicitly
+    // instantiating a new Color object.
+    return new Color(c.x, c.y, c.z);
   }
 }

@@ -1,12 +1,26 @@
-import Color from './Color';
+import Point from './Point';
+import Ray from './Ray';
+import Vec3 from './Vec3';
 
 // Output an image in the PPM format.
 // See https://en.wikipedia.org/wiki/Netpbm#PPM_example.
 
+const aspectRatio = 16 / 9;
+const focalLength = 1;
 const imageWidth = 256;
 const imageHeight = 256;
+const viewportHeight = 2;
+const viewportWidth = aspectRatio * viewportHeight;
 
 console.log(`P3\n${imageWidth} ${imageHeight}\n255`);
+
+const origin = new Point(0, 0, 0);
+const horizontal = new Vec3(viewportWidth, 0, 0);
+const vertical = new Vec3(0, viewportHeight, 0);
+const lowerLeftCorner = origin
+  .subtract(horizontal.scaleDown(2))
+  .subtract(vertical.scaleDown(2))
+  .subtract(new Vec3(0, 0, focalLength));
 
 for (let j = imageHeight - 1; j >= 0; j--) {
   process.stderr.clearLine(0);
@@ -14,12 +28,17 @@ for (let j = imageHeight - 1; j >= 0; j--) {
   process.stderr.write(`Scanlines remaining: ${j}`);
 
   for (let i = 0; i < imageWidth; i++) {
-    const r = i / (imageWidth - 1);
-    const g = j / (imageHeight - 1);
-    const b = 0.25;
-    const color = new Color(r, g, b);
+    const horizontalFactor = i / (imageWidth - 1);
+    const verticalFactor = j / (imageHeight - 1);
+    const direction = lowerLeftCorner
+      .add(horizontal.scaleUp(horizontalFactor))
+      .add(vertical.scaleUp(verticalFactor))
+      .subtract(origin);
 
-    console.log(color.toString());
+    const ray = new Ray(origin, direction);
+    const pixelColor = ray.color();
+
+    console.log(pixelColor.toString());
   }
 }
 
