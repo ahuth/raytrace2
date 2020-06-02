@@ -1,4 +1,4 @@
-import Vec3 from './Vec3';
+import Vec3 from '../Vec3';
 
 test('creation', () => {
   const vec = new Vec3(1, 2, 3);

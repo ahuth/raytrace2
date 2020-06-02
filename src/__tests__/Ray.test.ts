@@ -1,6 +1,6 @@
-import Point from './Point';
-import Ray from './Ray';
-import Vec3 from './Vec3';
+import Point from '../Point';
+import Ray from '../Ray';
+import Vec3 from '../Vec3';
 
 test('creation', () => {
   const origin = new Point(2, 0, 3);
