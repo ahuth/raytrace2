@@ -1,3 +1,5 @@
+import Color from './Color';
+
 // Output an image in the PPM format.
 // See https://en.wikipedia.org/wiki/Netpbm#PPM_example.
 
@@ -15,12 +17,9 @@ for (let j = imageHeight - 1; j >= 0; j--) {
     const r = i / (imageWidth - 1);
     const g = j / (imageHeight - 1);
     const b = 0.25;
+    const color = new Color(r, g, b);
 
-    const ir = Math.floor(255.999 * r);
-    const ig = Math.floor(255.999 * g);
-    const ib = Math.floor(255.999 * b);
-
-    console.log(`${ir} ${ig} ${ib}`);
+    console.log(color.toString());
   }
 }
 
