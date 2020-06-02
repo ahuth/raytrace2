@@ -3,8 +3,9 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "hello": "ts-node src/hello.ts",
+    "generate": "yarn --silent start > image.ppm",
     "lint": "eslint --ext .js,.ts src/",
+    "start": "ts-node src/main.ts",
     "types": "tsc --noEmit"
   },
   "devDependencies": {
