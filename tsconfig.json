@@ -7,6 +7,6 @@
       "noImplicitAny": true,
       "strict": true,
       "target": "es2018",
-      "types": ["node"]
+      "types": ["jest", "node"]
     },
   }

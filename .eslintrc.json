@@ -4,6 +4,9 @@
   "plugins": [
     "@typescript-eslint"
   ],
+  "env": {
+    "jest": true
+  },
   "rules": {
     "@typescript-eslint/indent": ["error", 2],
     "@typescript-eslint/no-unused-vars": "error",
