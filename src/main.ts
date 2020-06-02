@@ -7,7 +7,9 @@ const imageHeight = 256;
 console.log(`P3\n${imageWidth} ${imageHeight}\n255`);
 
 for (let j = imageHeight - 1; j >= 0; j--) {
-  console.error(`Scanlines remaining: ${j}`);
+  process.stderr.clearLine(0);
+  process.stderr.cursorTo(0);
+  process.stderr.write(`Scanlines remaining: ${j}`);
 
   for (let i = 0; i < imageWidth; i++) {
     const r = i / (imageWidth - 1);
@@ -22,4 +24,4 @@ for (let j = imageHeight - 1; j >= 0; j--) {
   }
 }
 
-console.error('Done');
+console.error('\nDone');
