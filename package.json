@@ -1,0 +1,14 @@
+{
+  "name": "raytrace2",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "hello": "ts-node src/hello.ts",
+    "types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.9",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.3"
+  }
+}
