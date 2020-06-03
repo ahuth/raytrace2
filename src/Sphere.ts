@@ -1,37 +1,56 @@
+import Hittable, { HitRecord } from './Hittable';
 import Point from './Point';
 import Ray from './Ray';
 
-export default class Sphere {
+export default class Sphere extends Hittable {
   center: Point;
   radius: number;
 
   constructor(center: Point, radius: number) {
+    super();
     this.center = center;
     this.radius = radius;
   }
 
   /**
-   * Determine the "hit point" a ray has with the sphere. I'm not 100% sure what this number
-   * represents. It might be the distance from the center of the sphere to the ray (perpendicular?).
-   * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#surfacenormalsandmultipleobjects/shadingwithsurfacenormals
+   * Get information about a ray's hit on the sphere (if it does hit).
+   * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#surfacenormalsandmultipleobjects/anabstractionforhittableobjects
    */
-  intersection(ray: Ray) {
+  hit(ray: Ray, minTime: number, maxTime: number): HitRecord | null {
     const fromRayToCenter = ray.origin.subtract(this.center);
-
-    // const a = ray.direction.dotProduct(ray.direction);
-    // const b = 2 * fromRayToCenter.dotProduct(ray.direction);
-    // const c = fromRayToCenter.dotProduct(fromRayToCenter) - this.radius * this.radius;
-    // const discriminant = b * b - 4 * a * c;
-
     const a = ray.direction.lengthSquared();
     const halfB = fromRayToCenter.dotProduct(ray.direction);
     const c = fromRayToCenter.lengthSquared() - this.radius * this.radius;
     const discriminant = halfB * halfB - a * c;
 
-    if (discriminant < 0 || a === 0) {
-      return -1;
+    if (discriminant > 0 && a > 0) {
+      const root = Math.sqrt(discriminant);
+      let time = (-halfB - root) / a;
+
+      if (time > minTime && time < maxTime) {
+        const point = ray.at(time);
+
+        return {
+          time,
+          point,
+          normal: point.subtract(this.center).scaleDown(this.radius),
+        };
+      }
+
+      // TODO: combine this case with the above one.
+      time = (-halfB + root) / a;
+
+      if (time > minTime && time < maxTime) {
+        const point = ray.at(time);
+
+        return {
+          time,
+          point,
+          normal: point.subtract(this.center).scaleDown(this.radius),
+        };
+      }
     }
 
-    return (-halfB - Math.sqrt(discriminant)) / a;
+    return null;
   }
 }

@@ -16,7 +16,7 @@ test('creation', () => {
   expect(sphere.radius).toEqual(7);
 });
 
-describe('intersection', () => {
+describe('hit', () => {
   test('a miss', () => {
     const ray = new Ray(
       new Point(0, 0, 0),
@@ -28,7 +28,7 @@ describe('intersection', () => {
       7,
     );
 
-    expect(sphere.intersection(ray)).toEqual(-1);
+    expect(sphere.hit(ray, 0, 10)).toEqual(null);
   });
 
   test('a hit', () => {
@@ -42,6 +42,7 @@ describe('intersection', () => {
       7,
     );
 
-    expect(sphere.intersection(ray)).toBeCloseTo(0.1878);
+    const hit = sphere.hit(ray, 0, 10)!;
+    expect(hit.time).toBeCloseTo(0.1878);
   });
 });
