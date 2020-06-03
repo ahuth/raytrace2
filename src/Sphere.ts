@@ -1,4 +1,5 @@
-import Hittable, { HitRecord } from './Hittable';
+import HitRecord from './HitRecord';
+import Hittable from './Hittable';
 import Point from './Point';
 import Ray from './Ray';
 
@@ -30,11 +31,11 @@ export default class Sphere extends Hittable {
       if (time > minTime && time < maxTime) {
         const point = ray.at(time);
 
-        return {
-          time,
+        return new HitRecord(
           point,
-          normal: point.subtract(this.center).scaleDown(this.radius),
-        };
+          time,
+          point.subtract(this.center).scaleDown(this.radius),
+        );
       }
 
       // TODO: combine this case with the above one.
@@ -43,11 +44,11 @@ export default class Sphere extends Hittable {
       if (time > minTime && time < maxTime) {
         const point = ray.at(time);
 
-        return {
-          time,
+        return new HitRecord(
           point,
-          normal: point.subtract(this.center).scaleDown(this.radius),
-        };
+          time,
+          point.subtract(this.center).scaleDown(this.radius),
+        );
       }
     }
 
