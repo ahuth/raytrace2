@@ -32,7 +32,7 @@ export default class Sphere extends Hittable {
         const point = ray.at(time);
 
         return new HitRecord(
-          point,
+          ray,
           time,
           point.subtract(this.center).scaleDown(this.radius),
         );
@@ -45,7 +45,7 @@ export default class Sphere extends Hittable {
         const point = ray.at(time);
 
         return new HitRecord(
-          point,
+          ray,
           time,
           point.subtract(this.center).scaleDown(this.radius),
         );
