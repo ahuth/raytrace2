@@ -1,6 +1,8 @@
 import Point from './Point';
 import Ray from './Ray';
+import Sphere from './Sphere';
 import Vec3 from './Vec3';
+import Hittables from './Hittables';
 
 // Output an image in the PPM format.
 // See https://en.wikipedia.org/wiki/Netpbm#PPM_example.
@@ -22,6 +24,9 @@ const lowerLeftCorner = origin
   .subtract(vertical.scaleDown(2))
   .subtract(new Vec3(0, 0, focalLength));
 
+const world = new Hittables();
+world.add(new Sphere(new Point(0, 0, -1), 0.5));
+
 for (let j = imageHeight - 1; j >= 0; j--) {
   process.stderr.clearLine(0);
   process.stderr.cursorTo(0);
@@ -36,7 +41,7 @@ for (let j = imageHeight - 1; j >= 0; j--) {
       .subtract(origin);
 
     const ray = new Ray(origin, direction);
-    const pixelColor = ray.color();
+    const pixelColor = ray.color(world);
 
     console.log(pixelColor.toString());
   }

@@ -1,5 +1,6 @@
 import Point from '../Point';
 import Ray from '../Ray';
+import Sphere from '../Sphere';
 import Vec3 from '../Vec3';
 
 test('creation', () => {
@@ -23,7 +24,7 @@ test('color', () => {
   const origin = new Point(2, 0, 3);
   const direction = new Vec3(5, 7, -4);
   const ray = new Ray(origin, direction);
-  const color = ray.color();
+  const color = ray.color(new Sphere(new Point(0, 0, -1), -0.5));
   expect(color.r).toBeCloseTo(0.5655);
   expect(color.g).toBeCloseTo(0.7393);
   expect(color.b).toBeCloseTo(1);

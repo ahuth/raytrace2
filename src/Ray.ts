@@ -1,9 +1,7 @@
 import Color from './Color';
+import type Hittable from './Hittable';
 import Point from './Point';
-import Sphere from './Sphere';
 import Vec3 from './Vec3';
-
-const sphere = new Sphere(new Point(0, 0, -1), 0.5);
 
 export default class Ray {
   origin: Point;
@@ -22,11 +20,11 @@ export default class Ray {
    * Get the color of the background the ray strikes. For now, this just returns a gradient.
    * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#rays,asimplecamera,andbackground/sendingraysintothescene
    */
-  color(): Color {
-    const sphereHit = sphere.hit(this, 0, 100);
+  color(world: Hittable): Color {
+    const hit = world.hit(this, 0, Infinity);
 
-    if (sphereHit) {
-      const N = this.at(sphereHit.time).subtract(new Point(0, 0, -1)).unit();
+    if (hit) {
+      const N = this.at(hit.time).subtract(new Point(0, 0, -1)).unit();
       const c = new Color(N.x + 1, N.y + 1, N.z + 1).scaleUp(0.5);
 
       // The `scaleUp` operation return a Vec3, not a Color. Get around that by explicitly
