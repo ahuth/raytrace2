@@ -3,6 +3,7 @@ import Color from './Color';
 import Point from './Point';
 import Sphere from './Sphere';
 import Hittables from './Hittables';
+import random from './random';
 
 // Output an image in the PPM format.
 // See https://en.wikipedia.org/wiki/Netpbm#PPM_example.
@@ -28,8 +29,8 @@ for (let j = imageHeight - 1; j >= 0; j--) {
     // For each pixel, send many rays through the scene (with slight randomness) and average the
     // results together.
     for (let s = 0; s < samplesPerPixel; s++) {
-      const u = (i + Math.random()) / (imageWidth - 1);
-      const v = (j + Math.random()) / (imageHeight - 1);
+      const u = (i + random(-1, 1)) / (imageWidth - 1);
+      const v = (j + random(-1, 1)) / (imageHeight - 1);
 
       const ray = Camera.getRay(u, v);
       const sampledColor = ray.color(world);
