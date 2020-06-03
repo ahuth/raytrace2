@@ -11,15 +11,21 @@ export default class Sphere {
   }
 
   /**
-   * Determine if the sphere is intersected by a ray.
-   * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#addingasphere/creatingourfirstraytracedimage
+   * Determine the "hit point" a ray has with the sphere. I'm not 100% sure what this number
+   * represents. It might be the distance from the center of the sphere to the ray (perpendicular?).
+   * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#surfacenormalsandmultipleobjects/shadingwithsurfacenormals
    */
-  isIntersectedBy(ray: Ray): boolean {
-    const offCenter = ray.origin.subtract(this.center);
+  intersection(ray: Ray) {
+    const fromRayToCenter = ray.origin.subtract(this.center);
     const a = ray.direction.dotProduct(ray.direction);
-    const b = 2 * offCenter.dotProduct(ray.direction);
-    const c = offCenter.dotProduct(offCenter) - this.radius * this.radius;
+    const b = 2 * fromRayToCenter.dotProduct(ray.direction);
+    const c = fromRayToCenter.dotProduct(fromRayToCenter) - this.radius * this.radius;
     const discriminant = b * b - 4 * a * c;
-    return discriminant > 0;
+
+    if (discriminant < 0 || a === 0) {
+      return -1;
+    }
+
+    return (-b - Math.sqrt(discriminant)) / (2 * a);
   }
 }

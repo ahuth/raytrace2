@@ -23,8 +23,15 @@ export default class Ray {
    * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#rays,asimplecamera,andbackground/sendingraysintothescene
    */
   color(): Color {
-    if (sphere.isIntersectedBy(this)) {
-      return new Color(1, 0, 0);
+    const sphereHit = sphere.intersection(this);
+
+    if (sphereHit > 0) {
+      const N = this.at(sphereHit).subtract(new Point(0, 0, -1)).unit();
+      const c = new Color(N.x + 1, N.y + 1, N.z + 1).scaleUp(0.5);
+
+      // The `scaleUp` operation return a Vec3, not a Color. Get around that by explicitly
+      // instantiating a new Color object.
+      return new Color(c.x, c.y, c.z);
     }
 
     const unitDirection = this.direction.unit();
