@@ -26,6 +26,7 @@ const lowerLeftCorner = origin
 
 const world = new Hittables();
 world.add(new Sphere(new Point(0, 0, -1), 0.5));
+world.add(new Sphere(new Point(0, -100.5, -1), 100));
 
 for (let j = imageHeight - 1; j >= 0; j--) {
   process.stderr.clearLine(0);
