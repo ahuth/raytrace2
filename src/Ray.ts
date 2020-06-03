@@ -24,8 +24,7 @@ export default class Ray {
     const hit = world.hit(this, 0, Infinity);
 
     if (hit) {
-      const N = this.at(hit.time).subtract(new Point(0, 0, -1)).unit();
-      const c = new Color(N.x + 1, N.y + 1, N.z + 1).scaleUp(0.5);
+      const c = hit.normal.add(new Color(1, 1, 1)).scaleUp(0.5);
 
       // The `scaleUp` operation return a Vec3, not a Color. Get around that by explicitly
       // instantiating a new Color object.
@@ -33,10 +32,10 @@ export default class Ray {
     }
 
     const unitDirection = this.direction.unit();
-    const factor = 0.5 * (unitDirection.y + 1);
+    const time = 0.5 * (unitDirection.y + 1);
 
-    const a = new Color(1, 1, 1).scaleUp(1 - factor);
-    const b = new Color(0.5, 0.7, 1).scaleUp(factor);
+    const a = new Color(1, 1, 1).scaleUp(1 - time);
+    const b = new Color(0.5, 0.7, 1).scaleUp(time);
     const c = a.add(b);
 
     // The `scaleUp` and `add` operations return a Vec3, not a Color. Get around that by explicitly
