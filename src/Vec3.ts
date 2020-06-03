@@ -77,7 +77,7 @@ export default class Vec3 {
     return this.scaleDown(this.length());
   }
 
-  private lengthSquared() {
+  lengthSquared() {
     return (this.x * this.x) + (this.y * this.y) + (this.z * this.z);
   }
 }
