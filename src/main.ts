@@ -1,4 +1,5 @@
 import Camera, { aspectRatio } from './Camera';
+import Color from './Color';
 import Point from './Point';
 import Sphere from './Sphere';
 import Hittables from './Hittables';
@@ -8,6 +9,7 @@ import Hittables from './Hittables';
 
 const imageWidth = 256;
 const imageHeight = Math.floor(imageWidth / aspectRatio);
+const samplesPerPixel = 100;
 
 console.log(`P3\n${imageWidth} ${imageHeight}\n255`);
 
@@ -21,11 +23,20 @@ for (let j = imageHeight - 1; j >= 0; j--) {
   process.stderr.write(`Scanlines remaining: ${j}`);
 
   for (let i = 0; i < imageWidth; i++) {
-    const u = i / (imageWidth - 1);
-    const v = j / (imageHeight - 1);
-    const ray = Camera.getRay(u, v);
-    const pixelColor = ray.color(world);
+    const colorSamples = [];
 
+    // For each pixel, send many rays through the scene (with slight randomness) and average the
+    // results together.
+    for (let s = 0; s < samplesPerPixel; s++) {
+      const u = (i + Math.random()) / (imageWidth - 1);
+      const v = (j + Math.random()) / (imageHeight - 1);
+
+      const ray = Camera.getRay(u, v);
+      const sampledColor = ray.color(world);
+      colorSamples.push(sampledColor);
+    }
+
+    const pixelColor = Color.average(colorSamples);
     console.log(pixelColor.toString());
   }
 }

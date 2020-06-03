@@ -9,6 +9,20 @@ export default class Color extends Vec3 {
     super(r, g, b);
   }
 
+  /**
+   * Average multiple colors together.
+   */
+  static average(colors: Color[]) {
+    const sum = colors.reduce(function (acc, color) {
+      return acc.add(color) as Color;
+    }, new Color(0, 0, 0));
+
+    const average = sum.scaleDown(colors.length);
+
+    // The `scaleDown` operation returns a Vec3. Manually convert it to a color here.
+    return new Color(average.x, average.y, average.z);
+  }
+
   get r() {
     return this.x;
   }
@@ -25,9 +39,20 @@ export default class Color extends Vec3 {
    * Write out the full 0-255 value for each color component, instead of the 0-1 that is stored.
    */
   toString() {
-    const ir = Math.floor(255.999 * this.r);
-    const ig = Math.floor(255.999 * this.g);
-    const ib = Math.floor(255.999 * this.b);
+    const clampedR = clamp(this.r, 0, 0.999);
+    const clampedG = clamp(this.g, 0, 0.999);
+    const clampedB = clamp(this.b, 0, 0.999);
+
+    const ir = Math.floor(256 * clampedR);
+    const ig = Math.floor(256 * clampedG);
+    const ib = Math.floor(256 * clampedB);
+
     return `${ir} ${ig} ${ib}`;
   }
+}
+
+function clamp(num: number, min: number, max: number) {
+  if (num < min) { return min; }
+  if (num > max) { return max; }
+  return num;
 }
