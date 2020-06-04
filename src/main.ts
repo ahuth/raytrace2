@@ -4,7 +4,7 @@ import LambertianMatte from './materials/LambertianMatte';
 import Matte from './materials/Matte';
 import Metal from './materials/Metal';
 import Point from './Point';
-import Sphere from './Sphere';
+import Sphere from './objects/Sphere';
 import Hittables from './Hittables';
 import random from './random';
 

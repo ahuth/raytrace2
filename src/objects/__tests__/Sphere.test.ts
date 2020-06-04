@@ -1,9 +1,9 @@
-import Color from '../Color';
-import LambertianMatte from '../materials/LambertianMatte';
-import Point from '../Point';
-import Ray from '../Ray';
+import Color from '../../Color';
+import LambertianMatte from '../../materials/LambertianMatte';
+import Point from '../../Point';
+import Ray from '../../Ray';
 import Sphere from '../Sphere';
-import Vec3 from '../Vec3';
+import Vec3 from '../../Vec3';
 
 const matteBlack = new LambertianMatte(new Color(0, 0, 0));
 

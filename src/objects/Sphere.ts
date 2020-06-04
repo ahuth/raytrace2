@@ -1,8 +1,8 @@
-import HitRecord from './HitRecord';
-import Hittable from './Hittable';
-import type Material from './Material';
-import type Point from './Point';
-import type Ray from './Ray';
+import HitRecord from '../HitRecord';
+import Hittable from '../Hittable';
+import type Material from '../Material';
+import type Point from '../Point';
+import type Ray from '../Ray';
 
 export default class Sphere extends Hittable {
   center: Point;
