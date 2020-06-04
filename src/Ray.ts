@@ -37,7 +37,7 @@ export default class Ray {
     if (hit) {
       // Bounce the ray in a random direction, to give a diffuse (matte) appearance to the hit
       // object.
-      const target = hit.point.add(hit.normal).add(Point.randomInUnitSphere());
+      const target = hit.point.add(hit.normal).add(Vec3.randomUnitVector());
       const ray = new Ray(hit.point, target.subtract(hit.point))
         .color(world, bouncesRemaining - 1)
         .scaleUp(0.5);
