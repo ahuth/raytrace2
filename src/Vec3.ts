@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import random from './random';
 
 export default class Vec3 {
@@ -112,7 +113,7 @@ export default class Vec3 {
   }
 
   /**
-   * Reflect a factor in relation to a normal.
+   * Reflect a vector in relation to a normal.
    * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#metal/mirroredlightreflection
    */
   reflect(normal: Vec3) {
@@ -121,5 +122,30 @@ export default class Vec3 {
         .scaleUp(this.dotProduct(normal))
         .scaleUp(2),
     );
+  }
+
+  /**
+   * Refract a vector in relation to a normal, if possible. This is covered in https://raytracing.github.io/books/RayTracingInOneWeekend.html#dielectrics/snell'slaw
+   * in the book,but I think there's a mistake in it. In Listing 50, I don't see how `r_out_perp`
+   * could be a vec3, since each term in it is a number, not a vec3.
+   *
+   * Instead of using that, I've used the version from Chapter 9 of https://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf.
+   * Note that according to this version used, a refraction isn't always possible, in which case
+   * this returns null;
+   */
+  refract(normal: Vec3, etaI_over_etaT: number) {
+    const unitVector = this.unit();
+    const dt = unitVector.dotProduct(normal);
+    const discriminant = 1 - (etaI_over_etaT * etaI_over_etaT) * (1 - (dt * dt));
+
+    if (discriminant > 0) {
+      return unitVector
+        .subtract(normal.scaleUp(dt))
+        .scaleUp(etaI_over_etaT)
+        .subtract(normal.scaleUp(Math.sqrt(discriminant)));
+    }
+
+    // Refraction wasn't possible.
+    return null;
   }
 }

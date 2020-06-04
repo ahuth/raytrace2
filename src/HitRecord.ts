@@ -12,7 +12,7 @@ export default class HitRecord {
 
   constructor(ray: Ray, time: number, outwardNormal: Vec3, material: Material) {
     // Determine if the hit was on the front or back face of an object.
-    this.frontFace = ray.direction.dotProduct(outwardNormal) < 0;
+    this.frontFace = ray.direction.dotProduct(outwardNormal) <= 0;
     this.point = ray.at(time);
     this.time = time;
     this.normal = this.frontFace ? outwardNormal : outwardNormal.negate();
