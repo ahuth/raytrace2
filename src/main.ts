@@ -11,6 +11,7 @@ import random from './random';
 const imageWidth = 256;
 const imageHeight = Math.floor(imageWidth / aspectRatio);
 const samplesPerPixel = 100;
+const maxBounces = 50;
 
 console.log(`P3\n${imageWidth} ${imageHeight}\n255`);
 
@@ -33,7 +34,7 @@ for (let j = imageHeight - 1; j >= 0; j--) {
       const v = (j + random(-1, 1)) / (imageHeight - 1);
 
       const ray = Camera.getRay(u, v);
-      const sampledColor = ray.color(world);
+      const sampledColor = ray.color(world, maxBounces);
       colorSamples.push(sampledColor);
     }
 

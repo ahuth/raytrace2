@@ -20,15 +20,26 @@ export default class Ray {
    * Get the color of the background the ray strikes. For now, this just returns a gradient.
    * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#rays,asimplecamera,andbackground/sendingraysintothescene
    */
-  color(world: Hittable): Color {
+  color(world: Hittable, bouncesRemaining = 1): Color {
+    // If we've exceeded the ray bounce limit, no more light is gathered.
+    // @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#diffusematerials/limitingthenumberofchildrays
+    if (bouncesRemaining <= 0) {
+      return new Color(0, 0, 0);
+    }
+
     const hit = world.hit(this, 0, Infinity);
 
     if (hit) {
-      const c = hit.normal.add(new Color(1, 1, 1)).scaleUp(0.5);
+      // Bounce the ray in a random direction, to give a diffuse (matte) appearance to the hit
+      // object.
+      const target = hit.point.add(hit.normal).add(Point.randomInUnitSphere());
+      const ray = new Ray(hit.point, target.subtract(hit.point))
+        .color(world, bouncesRemaining - 1)
+        .scaleUp(0.5);
 
-      // The `scaleUp` operation return a Vec3, not a Color. Get around that by explicitly
+      // The `scaleUp` operations return a Vec3, not a Color. Get around that by explicitly
       // instantiating a new Color object.
-      return new Color(c.x, c.y, c.z);
+      return new Color(ray.x, ray.y, ray.z);
     }
 
     const unitDirection = this.direction.unit();

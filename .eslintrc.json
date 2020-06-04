@@ -20,6 +20,8 @@
     "indent": 0,
     "lines-between-class-members": 0,
     "no-console": 0,
+    "no-constant-condition": 0,
+    "no-continue": 0,
     "no-plusplus": 0,
     "no-restricted-syntax": 0,
     "no-unused-vars": 0,

@@ -1,3 +1,5 @@
+import random from './random';
+
 export default class Vec3 {
   x: number;
   y: number;
@@ -7,6 +9,14 @@ export default class Vec3 {
     this.x = x;
     this.y = y;
     this.z = z;
+  }
+
+  static random(min?: number, max?: number) {
+    return new Vec3(
+      random(min, max),
+      random(min, max),
+      random(min, max),
+    );
   }
 
   negate() {
