@@ -27,7 +27,12 @@ export default class Ray {
       return new Color(0, 0, 0);
     }
 
-    const hit = world.hit(this, 0, Infinity);
+    // Get the first hit on any object in the "world".
+    //
+    // Note that minTime is 0.001 instead of 0 to avoid hits that are very near 0, which can cause
+    // a problem called "shadow acne".
+    // See https://raytracing.github.io/books/RayTracingInOneWeekend.html#diffusematerials/fixingshadowacne.
+    const hit = world.hit(this, 0.001, Infinity);
 
     if (hit) {
       // Bounce the ray in a random direction, to give a diffuse (matte) appearance to the hit
