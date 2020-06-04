@@ -39,9 +39,15 @@ export default class Color extends Vec3 {
    * Write out the full 0-255 value for each color component, instead of the 0-1 that is stored.
    */
   toString() {
-    const clampedR = clamp(this.r, 0, 0.999);
-    const clampedG = clamp(this.g, 0, 0.999);
-    const clampedB = clamp(this.b, 0, 0.999);
+    // Gamma correct for gamma=2.0.
+    // See https://raytracing.github.io/books/RayTracingInOneWeekend.html#diffusematerials/usinggammacorrectionforaccuratecolorintensity.
+    const correctedR = Math.sqrt(this.r);
+    const correctedG = Math.sqrt(this.g);
+    const correctedB = Math.sqrt(this.b);
+
+    const clampedR = clamp(correctedR, 0, 0.999);
+    const clampedG = clamp(correctedG, 0, 0.999);
+    const clampedB = clamp(correctedB, 0, 0.999);
 
     const ir = Math.floor(256 * clampedR);
     const ig = Math.floor(256 * clampedG);

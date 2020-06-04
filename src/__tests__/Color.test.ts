@@ -9,5 +9,5 @@ test('creation', () => {
 
 test('toString', () => {
   const color = new Color(0.2, 0.88, 1);
-  expect(color.toString()).toEqual('51 225 255');
+  expect(color.toString()).toEqual('114 240 255');
 });
