@@ -7,7 +7,7 @@ import type HitRecord from '../HitRecord';
 /**
  * A diffuse (matte) material using Lambertian reflection.
  */
-export default class Lambertian extends Material {
+export default class LambertianMatte extends Material {
   albedo: Color;
 
   constructor(albedo: Color) {

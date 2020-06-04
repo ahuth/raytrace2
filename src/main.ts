@@ -1,6 +1,6 @@
 import Camera, { aspectRatio } from './Camera';
 import Color from './Color';
-import Lambertian from './materials/Lambertian';
+import LambertianMatte from './materials/LambertianMatte';
 import Matte from './materials/Matte';
 import Metal from './materials/Metal';
 import Point from './Point';
@@ -19,7 +19,7 @@ const maxBounces = 50;
 console.log(`P3\n${imageWidth} ${imageHeight}\n255`);
 
 const world = new Hittables();
-world.add(new Sphere(new Point(0, 0, -1), 0.5, new Lambertian(new Color(0.7, 0.3, 0.3))));
+world.add(new Sphere(new Point(0, 0, -1), 0.5, new LambertianMatte(new Color(0.7, 0.3, 0.3))));
 world.add(new Sphere(new Point(0, -100.5, -1), 100, new Matte(new Color(0.8, 0.8, 0))));
 world.add(new Sphere(new Point(1, 0, -1), 0.5, new Metal(new Color(0.8, 0.6, 0.2))));
 world.add(new Sphere(new Point(-1, 0, -1), 0.5, new Metal(new Color(0.8, 0.8, 0.8))));
