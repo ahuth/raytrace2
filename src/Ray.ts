@@ -35,16 +35,16 @@ export default class Ray {
     const hit = world.hit(this, 0.001, Infinity);
 
     if (hit) {
-      // Bounce the ray in a random direction, to give a diffuse (matte) appearance to the hit
-      // object.
-      const target = hit.point.add(Point.randomInHemisphere(hit.normal));
-      const ray = new Ray(hit.point, target.subtract(hit.point))
-        .color(world, bouncesRemaining - 1)
-        .scaleUp(0.5);
+      const scattered = hit.material.scatter(this, hit);
 
-      // The `scaleUp` operations return a Vec3, not a Color. Get around that by explicitly
-      // instantiating a new Color object.
-      return new Color(ray.x, ray.y, ray.z);
+      if (scattered) {
+        const color = scattered.ray.color(world, bouncesRemaining - 1)
+          .multiply(scattered.attenuation);
+
+        // The `multiply` operations return a Vec3, not a Color. Get around that by explicitly
+        // instantiating a new Color object.
+        return new Color(color.x, color.y, color.z);
+      }
     }
 
     const unitDirection = this.direction.unit();

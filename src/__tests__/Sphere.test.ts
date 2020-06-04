@@ -1,12 +1,17 @@
+import Color from '../Color';
+import Lambertian from '../materials/Lambertian';
 import Point from '../Point';
 import Ray from '../Ray';
 import Sphere from '../Sphere';
 import Vec3 from '../Vec3';
 
+const matteBlack = new Lambertian(new Color(0, 0, 0));
+
 test('creation', () => {
   const sphere = new Sphere(
     new Point(4, 5, 6),
     7,
+    matteBlack,
   );
 
   expect(sphere.center).toEqual(expect.objectContaining({
@@ -26,6 +31,7 @@ describe('hit', () => {
     const sphere = new Sphere(
       new Point(4, 5, 6),
       7,
+      matteBlack,
     );
 
     expect(sphere.hit(ray, 0, 10)).toEqual(null);
@@ -40,6 +46,7 @@ describe('hit', () => {
     const sphere = new Sphere(
       new Point(4, 5, 6),
       7,
+      matteBlack,
     );
 
     const hit = sphere.hit(ray, 0, 10)!;

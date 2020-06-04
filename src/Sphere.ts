@@ -1,16 +1,19 @@
 import HitRecord from './HitRecord';
 import Hittable from './Hittable';
-import Point from './Point';
-import Ray from './Ray';
+import type Material from './Material';
+import type Point from './Point';
+import type Ray from './Ray';
 
 export default class Sphere extends Hittable {
   center: Point;
   radius: number;
+  material: Material;
 
-  constructor(center: Point, radius: number) {
+  constructor(center: Point, radius: number, material: Material) {
     super();
     this.center = center;
     this.radius = radius;
+    this.material = material;
   }
 
   /**
@@ -35,6 +38,7 @@ export default class Sphere extends Hittable {
           ray,
           time,
           point.subtract(this.center).scaleDown(this.radius),
+          this.material,
         );
       }
 
@@ -48,6 +52,7 @@ export default class Sphere extends Hittable {
           ray,
           time,
           point.subtract(this.center).scaleDown(this.radius),
+          this.material,
         );
       }
     }

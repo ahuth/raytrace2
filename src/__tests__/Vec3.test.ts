@@ -108,3 +108,12 @@ test('unit vector', () => {
   expect(unit.y).toBeCloseTo(0.889);
   expect(unit.z).toBeCloseTo(0.381);
 });
+
+test('reflection', () => {
+  const vec = new Vec3(2, 7, 3);
+  const normal = new Vec3(1, -1, 0);
+  const reflected = vec.reflect(normal);
+  expect(reflected.x).toBeCloseTo(12);
+  expect(reflected.y).toBeCloseTo(-3);
+  expect(reflected.z).toBeCloseTo(3);
+});
