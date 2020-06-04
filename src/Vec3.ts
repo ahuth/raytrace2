@@ -11,23 +11,11 @@ export default class Vec3 {
     this.z = z;
   }
 
-  /**
-   * Get a random unit vector by picking points on the surface of a unit sphere, offset along the
-   * surface normal... whatever that means.
-   *
-   * Useful for calculating true Lambertian reflection.
-   *
-   * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#diffusematerials/truelambertianreflection
-   */
-  static randomUnitVector() {
-    const a = random(0, 2 * Math.PI);
-    const z = random(-1, 1);
-    const r = Math.sqrt(1 - z * z);
-
+  static random(min?: number, max?: number) {
     return new Vec3(
-      r * Math.cos(a),
-      r * Math.sin(a),
-      z,
+      random(min, max),
+      random(min, max),
+      random(min, max),
     );
   }
 
