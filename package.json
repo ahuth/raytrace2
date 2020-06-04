@@ -3,6 +3,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "all": "yarn lint && yarn types && yarn test && yarn generate",
     "generate": "yarn --silent start > image.ppm",
     "lint": "eslint --ext .js,.ts src/",
     "start": "ts-node src/main.ts",
