@@ -1,12 +1,13 @@
 import Camera from './Camera';
 import Color from './Color';
 import Dialectric from './materials/Dialectric';
+import Hittables from './Hittables';
 import LambertianMatte from './materials/LambertianMatte';
 import Matte from './materials/Matte';
 import Metal from './materials/Metal';
 import Point from './Point';
 import Sphere from './objects/Sphere';
-import Hittables from './Hittables';
+import Vec3 from './Vec3';
 import random from './random';
 
 // Output an image in the PPM format.
@@ -27,7 +28,18 @@ world.add(new Sphere(new Point(1, 0, -1), 0.5, new Metal(new Color(0.8, 0.6, 0.2
 world.add(new Sphere(new Point(-1, 0, -1), 0.5, new Dialectric(1.5)));
 world.add(new Sphere(new Point(-1, 0, -1), -0.45, new Dialectric(1.5)));
 
-const camera = new Camera(90, aspectRatio);
+const camera = new Camera(
+  // Look from point
+  new Point(-2, 2, 1),
+  // Look to point
+  new Point(0, 0, -1),
+  // Camera rotation. Right now points straight up, so the camera is not tilted at all.
+  new Vec3(0, 1, 0),
+  // Field of view.
+  40,
+  // Aspect ratio.
+  aspectRatio,
+);
 
 for (let j = imageHeight - 1; j >= 0; j--) {
   process.stderr.clearLine(0);

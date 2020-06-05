@@ -8,21 +8,39 @@ export default class Camera {
   horizontal: Vec3;
   vertical: Vec3;
 
-  constructor(verticalFov: number, aspectRatio: number) {
+  constructor(
+    lookFrom: Point,
+    lookTo: Point,
+    /**
+     * A vector pointing "up" to the top of the camera. This allows the view to be rotated or
+     * tilted.
+     */
+    viewUp: Vec3,
+    verticalFov: number,
+    aspectRatio: number,
+  ) {
     const theta = degreesToRadians(verticalFov);
     const h = Math.tan(theta / 2);
 
-    const focalLength = 1;
     const viewportHeight = 2 * h;
     const viewportWidth = aspectRatio * viewportHeight;
 
-    this.origin = new Point(0, 0, 0);
-    this.horizontal = new Vec3(viewportWidth, 0, 0);
-    this.vertical = new Vec3(0, viewportHeight, 0);
+    // Convert `viewUp` to a vector pointing up but perpendicular to the direction the camera is
+    // looking.
+    // See https://raytracing.github.io/books/RayTracingInOneWeekend.html#positionablecamera/positioningandorientingthecamera
+    const lookDirection = lookFrom.subtract(lookTo);
+    const w = lookDirection.unit();
+    const u = viewUp.crossProduct(w).unit();
+    const v = w.crossProduct(u);
+
+    this.origin = lookFrom;
+    this.horizontal = u.scaleUp(viewportWidth);
+    this.vertical = v.scaleUp(viewportHeight);
+
     this.lowerLeftCorner = this.origin
       .subtract(this.horizontal.scaleDown(2))
       .subtract(this.vertical.scaleDown(2))
-      .subtract(new Vec3(0, 0, focalLength));
+      .subtract(w);
   }
 
   getRay(u: number, v: number) {
