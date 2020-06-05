@@ -1,4 +1,4 @@
-import Camera, { aspectRatio } from './Camera';
+import Camera from './Camera';
 import Color from './Color';
 import Dialectric from './materials/Dialectric';
 import LambertianMatte from './materials/LambertianMatte';
@@ -12,6 +12,7 @@ import random from './random';
 // Output an image in the PPM format.
 // See https://en.wikipedia.org/wiki/Netpbm#PPM_example.
 
+const aspectRatio = 16 / 9;
 const imageWidth = 256;
 const imageHeight = Math.floor(imageWidth / aspectRatio);
 const samplesPerPixel = 100;
@@ -25,6 +26,8 @@ world.add(new Sphere(new Point(0, -100.5, -1), 100, new Matte(new Color(0.8, 0.8
 world.add(new Sphere(new Point(1, 0, -1), 0.5, new Metal(new Color(0.8, 0.6, 0.2), 0.05)));
 world.add(new Sphere(new Point(-1, 0, -1), 0.5, new Dialectric(1.5)));
 world.add(new Sphere(new Point(-1, 0, -1), -0.45, new Dialectric(1.5)));
+
+const camera = new Camera(90, aspectRatio);
 
 for (let j = imageHeight - 1; j >= 0; j--) {
   process.stderr.clearLine(0);
@@ -41,7 +44,7 @@ for (let j = imageHeight - 1; j >= 0; j--) {
       const u = (i + random(-1, 1)) / (imageWidth - 1);
       const v = (j + random(-1, 1)) / (imageHeight - 1);
 
-      const ray = Camera.getRay(u, v);
+      const ray = camera.getRay(u, v);
       const sampledColor = ray.color(world, maxBounces);
       colorSamples.push(sampledColor);
     }
