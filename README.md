@@ -7,7 +7,7 @@ Follow-up to https://github.com/ahuth/raytrace, this implements a raytracer by f
 Generate the image by running the following command:
 
 ```
-yarn generate
+yarn build
 ```
 
 A git-ignored `image.ppm` file will be generated at the root of the project.
