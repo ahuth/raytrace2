@@ -1,11 +1,9 @@
 import Camera from './Camera';
 import Color from './Color';
-import Hittables from './Hittables';
 import Point from './Point';
 import Vec3 from './Vec3';
 import random from './random';
-import { Dialectric, LambertianMatte, Matte, Metal } from './materials';
-import { Sphere } from './objects';
+import randomScene from './randomScene';
 
 // Output an image in the PPM format.
 // See https://en.wikipedia.org/wiki/Netpbm#PPM_example.
@@ -18,19 +16,13 @@ const maxBounces = 50;
 
 console.log(`P3\n${imageWidth} ${imageHeight}\n255`);
 
-const world = new Hittables();
-world.add(new Sphere(new Point(0, 0, -1), 0.5, new LambertianMatte(new Color(0.7, 0.3, 0.3))));
-world.add(new Sphere(new Point(0, -100.5, -1), 100, new Matte(new Color(0.8, 0.8, 0))));
-world.add(new Sphere(new Point(1, 0, -1), 0.5, new Metal(new Color(0.8, 0.6, 0.2), 0.05)));
-world.add(new Sphere(new Point(-1, 0, -1), 0.5, new Dialectric(1.5)));
-world.add(new Sphere(new Point(-1, 0, -1), -0.45, new Dialectric(1.5)));
-
-const lookFrom = new Point(3, 3, 2);
-const lookTo = new Point(0, 0, -1);
+const world = randomScene();
 
 const camera = new Camera(
-  lookFrom,
-  lookTo,
+  // Look from
+  new Point(13, 2, 3),
+  // Look to
+  new Point(0, 0, 0),
   // Camera rotation. Right now points straight up, so the camera is not tilted at all.
   new Vec3(0, 1, 0),
   // Field of view.
@@ -38,9 +30,9 @@ const camera = new Camera(
   // Aspect ratio.
   aspectRatio,
   // Aperature
-  2,
+  0.1,
   // Distance to focus
-  lookFrom.subtract(lookTo).length(),
+  10,
 );
 
 for (let j = imageHeight - 1; j >= 0; j--) {
