@@ -23,34 +23,11 @@ export default function randomScene(): Hittables {
 
       if (center.subtract(new Point(4, 0.2, 0)).length() > 0.9) {
         if (chooseMaterial < 0.8) {
-          /**
-           * Diffuse
-           */
-
-          const albedo = Color.fromVec3(Color.random().multiply(Color.random()));
-
-          const sphereMaterial = new LambertianMatte(albedo);
-          const sphere = new Sphere(center, 0.2, sphereMaterial);
-          world.add(sphere);
+          world.add(createDiffuse(center));
         } else if (chooseMaterial < 0.95) {
-          /**
-           * Metal
-           */
-
-          const albedo = Color.fromVec3(Color.random(0.5, 1));
-
-          const fuzz = random(0, 0.5);
-          const sphereMaterial = new Metal(albedo, fuzz);
-          const sphere = new Sphere(center, 0.2, sphereMaterial);
-          world.add(sphere);
+          world.add(createMetal(center));
         } else {
-          /**
-           * Glass
-           */
-
-          const sphereMaterial = new Dialectric(1.5);
-          const sphere = new Sphere(center, 0.2, sphereMaterial);
-          world.add(sphere);
+          world.add(createGlass(center));
         }
       }
     }
@@ -69,4 +46,25 @@ export default function randomScene(): Hittables {
   world.add(sphere3);
 
   return world;
+}
+
+function createDiffuse(location: Point) {
+  const albedo = Color.fromVec3(Color.random().multiply(Color.random()));
+  const sphereMaterial = new LambertianMatte(albedo);
+
+  return new Sphere(location, 0.2, sphereMaterial);
+}
+
+function createMetal(location: Point) {
+  const albedo = Color.fromVec3(Color.random(0.5, 1));
+  const fuzz = random(0, 0.5);
+  const sphereMaterial = new Metal(albedo, fuzz);
+
+  return new Sphere(location, 0.2, sphereMaterial);
+}
+
+function createGlass(location: Point) {
+  const sphereMaterial = new Dialectric(1.5);
+
+  return new Sphere(location, 0.2, sphereMaterial);
 }
