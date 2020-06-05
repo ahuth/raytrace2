@@ -20,7 +20,16 @@ export default class Color extends Vec3 {
     const average = sum.scaleDown(colors.length);
 
     // The `scaleDown` operation returns a Vec3. Manually convert it to a color here.
-    return new Color(average.x, average.y, average.z);
+    // return new Color(average.x, average.y, average.z);
+    return Color.fromVec3(average);
+  }
+
+  /**
+   * Convert a Vec3 to a Color. Color is a subclass of Vec3, but the operations such as `add` and
+   * `multiply` return a Vec3. This is a convenience function to convert back to a Color.
+   */
+  static fromVec3(vec: Vec3): Color {
+    return new Color(vec.x, vec.y, vec.z);
   }
 
   get r() {

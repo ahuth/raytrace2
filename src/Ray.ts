@@ -43,7 +43,7 @@ export default class Ray {
 
         // The `multiply` operations return a Vec3, not a Color. Get around that by explicitly
         // instantiating a new Color object.
-        return new Color(color.x, color.y, color.z);
+        return Color.fromVec3(color);
       }
     }
 
@@ -56,6 +56,6 @@ export default class Ray {
 
     // The `scaleUp` and `add` operations return a Vec3, not a Color. Get around that by explicitly
     // instantiating a new Color object.
-    return new Color(c.x, c.y, c.z);
+    return Color.fromVec3(c);
   }
 }

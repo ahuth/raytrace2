@@ -27,9 +27,7 @@ export default function randomScene(): Hittables {
            * Diffuse
            */
 
-          const albedoVec = Color.random().multiply(Color.random());
-          // `multiply` returns a Vec3, not a Color. Here we manually convert to a color.
-          const albedo = new Color(albedoVec.x, albedoVec.y, albedoVec.z);
+          const albedo = Color.fromVec3(Color.random().multiply(Color.random()));
 
           const sphereMaterial = new LambertianMatte(albedo);
           const sphere = new Sphere(center, 0.2, sphereMaterial);
@@ -39,9 +37,7 @@ export default function randomScene(): Hittables {
            * Metal
            */
 
-          const albedoVec = Color.random(0.5, 1);
-          // `multiply` returns a Vec3, not a Color. Here we manually convert to a color.
-          const albedo = new Color(albedoVec.x, albedoVec.y, albedoVec.z);
+          const albedo = Color.fromVec3(Color.random(0.5, 1));
 
           const fuzz = random(0, 0.5);
           const sphereMaterial = new Metal(albedo, fuzz);
