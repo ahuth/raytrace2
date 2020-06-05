@@ -125,27 +125,22 @@ export default class Vec3 {
   }
 
   /**
-   * Refract a vector in relation to a normal, if possible. This is covered in https://raytracing.github.io/books/RayTracingInOneWeekend.html#dielectrics/snell'slaw
-   * in the book,but I think there's a mistake in it. In Listing 50, I don't see how `r_out_perp`
-   * could be a vec3, since each term in it is a number, not a vec3.
-   *
-   * Instead of using that, I've used the version from Chapter 9 of https://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf.
-   * Note that according to this version used, a refraction isn't always possible, in which case
-   * this returns null;
+   * Refract a vector according to Snell's law by figuring out the parallel and perpendicular
+   * directions and combining them.
+   * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#dielectrics/snell'slaw
    */
   refract(normal: Vec3, etaI_over_etaT: number) {
     const unitVector = this.unit();
-    const dt = unitVector.dotProduct(normal);
-    const discriminant = 1 - (etaI_over_etaT * etaI_over_etaT) * (1 - (dt * dt));
+    const cosineTheta = unitVector.negate().dotProduct(normal);
 
-    if (discriminant > 0) {
-      return unitVector
-        .subtract(normal.scaleUp(dt))
-        .scaleUp(etaI_over_etaT)
-        .subtract(normal.scaleUp(Math.sqrt(discriminant)));
-    }
+    const parallel = normal
+      .scaleUp(cosineTheta)
+      .add(unitVector)
+      .scaleUp(etaI_over_etaT);
 
-    // Refraction wasn't possible.
-    return null;
+    const perpendicular = normal
+      .scaleUp(-Math.sqrt(1 - parallel.lengthSquared()));
+
+    return parallel.add(perpendicular);
   }
 }
