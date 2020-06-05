@@ -25,6 +25,7 @@
     "no-continue": 0,
     "no-else-return": 0,
     "no-plusplus": 0,
+    "no-restricted-properties": 0,
     "no-restricted-syntax": 0,
     "no-unused-vars": 0,
     "no-useless-constructor": 0,
