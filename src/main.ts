@@ -1,14 +1,11 @@
 import Camera from './Camera';
 import Color from './Color';
-import Dialectric from './materials/Dialectric';
 import Hittables from './Hittables';
-import LambertianMatte from './materials/LambertianMatte';
-import Matte from './materials/Matte';
-import Metal from './materials/Metal';
 import Point from './Point';
-import Sphere from './objects/Sphere';
 import Vec3 from './Vec3';
 import random from './random';
+import { Dialectric, LambertianMatte, Matte, Metal } from './materials';
+import { Sphere } from './objects';
 
 // Output an image in the PPM format.
 // See https://en.wikipedia.org/wiki/Netpbm#PPM_example.
