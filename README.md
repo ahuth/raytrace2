@@ -2,6 +2,8 @@
 
 Follow-up to https://github.com/ahuth/raytrace, this implements a raytracer by following [Raytracing in One Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html), by Peter Shirley.
 
+![Ray-traced image of a bunch of random spheres made of different materials](https://user-images.githubusercontent.com/2503289/83919200-f2ad4f80-a72e-11ea-9dd8-c928235ffcf4.jpg)
+
 ## Usage
 
 Generate the image by running the following command:
