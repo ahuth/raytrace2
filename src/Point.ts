@@ -1,4 +1,5 @@
 import Vec3 from './Vec3';
+import random from './random';
 
 export default class Point extends Vec3 {
   /**
@@ -26,6 +27,18 @@ export default class Point extends Vec3 {
       return inUnitSphere;
     } else {
       return inUnitSphere.negate();
+    }
+  }
+
+  /**
+   * Find a random point inside a unit disk.
+   * @see https://raytracing.github.io/books/RayTracingInOneWeekend.html#defocusblur/generatingsamplerays
+   */
+  static randomInUnitDisk() {
+    while (true) {
+      const vec = new Vec3(random(-1, 1), random(-1, 1), 0);
+      if (vec.lengthSquared() >= 1) { continue; }
+      return vec;
     }
   }
 }

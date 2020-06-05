@@ -25,17 +25,22 @@ world.add(new Sphere(new Point(1, 0, -1), 0.5, new Metal(new Color(0.8, 0.6, 0.2
 world.add(new Sphere(new Point(-1, 0, -1), 0.5, new Dialectric(1.5)));
 world.add(new Sphere(new Point(-1, 0, -1), -0.45, new Dialectric(1.5)));
 
+const lookFrom = new Point(3, 3, 2);
+const lookTo = new Point(0, 0, -1);
+
 const camera = new Camera(
-  // Look from point
-  new Point(-2, 2, 1),
-  // Look to point
-  new Point(0, 0, -1),
+  lookFrom,
+  lookTo,
   // Camera rotation. Right now points straight up, so the camera is not tilted at all.
   new Vec3(0, 1, 0),
   // Field of view.
-  40,
+  20,
   // Aspect ratio.
   aspectRatio,
+  // Aperature
+  2,
+  // Distance to focus
+  lookFrom.subtract(lookTo).length(),
 );
 
 for (let j = imageHeight - 1; j >= 0; j--) {
