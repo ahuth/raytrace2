@@ -49,6 +49,7 @@ describe('hit', () => {
       matteBlack,
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const hit = sphere.hit(ray, 0, 10)!;
     expect(hit.time).toBeCloseTo(0.1878);
   });
